@@ -46,9 +46,9 @@ namespace WordFinder
                 int counter = 0;
                 for(int i = 0; i < rules.Length; i++)
                 {
-                    if (rules[i].index < word.Length)
+                    if (rules[i].index <= word.Length)
                     {
-                        if (rules[i].symbol.ToLower() == word[rules[i].index].ToString().ToLower())
+                        if (rules[i].symbol.ToLower() == word[rules[i].index - 1].ToString().ToLower())
                         {
                             counter++;
                         }
@@ -117,20 +117,32 @@ namespace WordFinder
         {
             if ((textBox1.Text != "") || (textBox2.Text != ""))
             {
+                listBox1.Items.Clear();
+
                 int wordSymbolsCount = int.Parse(numericUpDown1.Value.ToString());
 
-                string[] definiteSymbols1;
                 DefiniteSymbol[] definiteSymbols = new DefiniteSymbol[0];
                 if (textBox1.Text != "")
                 {
-                    definiteSymbols1 = textBox1.Text.Split('\n');
-                    definiteSymbols = new DefiniteSymbol[definiteSymbols1.Length];
-
+                    string[] definiteSymbols1 = textBox1.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                    List<string> definiteSymbols1_cleaned = new List<string>();
                     for (int i = 0; i < definiteSymbols1.Length; i++)
                     {
-                        string[] definiteSymbols2 = definiteSymbols1[i].Split(':');
+                        if (definiteSymbols1[i] != "")
+                        {
+                            definiteSymbols1_cleaned.Add(definiteSymbols1[i]);
+                        }
+                    }
+                    definiteSymbols = new DefiniteSymbol[definiteSymbols1_cleaned.Count];
 
-                        definiteSymbols[i] = new DefiniteSymbol(int.Parse(definiteSymbols2[0].Trim()), definiteSymbols2[1].ToString().Trim().ToLower());
+                    for (int i = 0; i < definiteSymbols.Length; i++)
+                    {
+                        if (definiteSymbols1_cleaned[i] != "")
+                        {
+                            string[] definiteSymbols2 = definiteSymbols1_cleaned[i].Split(':');
+
+                            definiteSymbols[i] = new DefiniteSymbol(int.Parse(definiteSymbols2[0].Trim()), definiteSymbols2[1].ToString().Trim().ToLower());
+                        }
                     }
                 }
 
@@ -163,6 +175,11 @@ namespace WordFinder
                             }
                         }
                     }
+                }
+
+                if (listBox1.Items.Count == 0)
+                {
+                    listBox1.Items.Add("Нет результатов!");
                 }
             }
             else
