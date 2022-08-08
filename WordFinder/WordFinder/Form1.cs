@@ -18,3 +18,43 @@ namespace WordFinder
         }
     }
 }
+
+
+
+/*
+ static string path = "RUS.txt";
+static void Main(string[] args)
+{
+    int count = 0;
+    using (StreamReader reader = new StreamReader(path))
+    {
+        string? line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            char[] letters = line.ToCharArray();
+            if (letters.Length == 9)
+            {
+                if (letters[1].ToString() == "а")
+                {
+                    for(int i = 0; i < letters.Length; i++) 
+                    {
+                        if (letters[i].ToString() == "щ")
+                        {
+                            for (int j = 0; j < letters.Length; j++)
+                            {
+                                if (letters[j].ToString() == "т")
+                                {
+                                    Console.WriteLine(line);
+                                    count++;
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Console.WriteLine(count);
+ */
